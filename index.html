@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<title>Open Creative Studio</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue:#4A90C4;--blue-deep:#1F5F8A;--blue-pale:#D6EAF5;--blue-mist:#EEF6FB;
+  --mustard:#D4A82A;--mustard-light:#F5D060;--mustard-pale:#FBF3D5;
+  --terra:#D4725A;--terra-light:#E89E8C;--terra-pale:#FAE8E4;--terra-dark:#9B4A35;
+  --sand:#F5EDD8;--sage:#8FAF8A;--sage-dark:#4A6E4E;--sage-pale:#EBF3E8;
+  --plum:#8A5C8A;--plum-pale:#F2EAF2;--mauve:#9B6B9B;
+  --rust:#C4622A;--rust-pale:#FAECE4;--coral:#E8896A;
+  --forest:#3A6B4A;--forest-pale:#E4F0E8;
+  --teal:#2A8A8A;--teal-pale:#E0F2F2;
+  --rose:#B05070;--rose-pale:#F5E8EC;
+  --amber:#B07A2A;--amber-pale:#F8EDD4;
+  --cream:#FDFAF4;--ink:#1A1208;--text:#2A1F14;--muted:#7A6A58;--border:rgba(42,31,20,0.1);
+  --ff-head:'Space Grotesk',sans-serif;--ff-serif:'Cormorant Garamond',serif;--ff-body:'Inter',sans-serif;
+}
+body{font-family:var(--ff-body);background:var(--cream);color:var(--text);overflow-x:hidden;}
+nav{position:sticky;top:0;z-index:200;background:var(--cream);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;}
+.nav-brand{display:flex;flex-direction:column;line-height:1.15;}
+.nav-brand-main{font-family:var(--ff-head);font-size:15px;font-weight:700;color:var(--blue-deep);}
+.nav-brand-sub{font-family:var(--ff-serif);font-size:13px;font-style:italic;color:var(--terra);font-weight:300;}
+.nav-links{display:flex;gap:1.5rem;list-style:none;}
+.nav-links a{font-family:var(--ff-head);font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);text-decoration:none;cursor:pointer;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--blue-deep);}
+.nav-cta{background:var(--terra);color:white;font-family:var(--ff-head);font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;padding:10px 20px;border-radius:40px;cursor:pointer;transition:background 0.2s;}
+.nav-cta:hover{background:var(--terra-dark);}
+.page{display:none;}
+.page.active{display:block;animation:fadeUp 0.35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.hero-main{display:grid;grid-template-columns:58% 42%;min-height:88vh;}
+.hero-text-col{padding:5rem 3rem 4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--cream);}
+.hero-tag{font-family:var(--ff-serif);font-style:italic;font-size:18px;font-weight:300;color:var(--terra);margin-bottom:1.5rem;}
+.hero-h1{font-family:var(--ff-head);font-size:clamp(2.8rem,5vw,5rem);font-weight:700;line-height:0.95;letter-spacing:-0.03em;color:var(--ink);margin-bottom:1.5rem;}
+.hero-h1 .serif-word{font-family:var(--ff-serif);font-weight:300;font-style:italic;font-size:1.15em;color:var(--terra);letter-spacing:0;}
+.hero-desc{font-family:var(--ff-body);font-size:15px;font-weight:300;color:var(--muted);max-width:420px;line-height:1.85;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:3rem;}
+.btn-pill{background:var(--blue-deep);color:white;font-family:var(--ff-head);font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:none;padding:13px 28px;border-radius:40px;cursor:pointer;transition:background 0.2s;}
+.btn-pill:hover{background:var(--blue);}
+.btn-ghost{background:transparent;color:var(--text);font-family:var(--ff-head);font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;border:1.5px solid var(--border);padding:13px 28px;border-radius:40px;cursor:pointer;transition:all 0.2s;}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue-deep);}
+.hero-stats{display:flex;gap:2.5rem;}
+.hstat-n{font-family:var(--ff-head);font-size:2rem;font-weight:700;color:var(--blue-deep);}
+.hstat-l{font-family:var(--ff-body);font-size:11px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;}
+.hero-visual-col{position:relative;overflow:hidden;background:var(--blue-pale);}
+.hv-circle-big{position:absolute;width:420px;height:420px;border-radius:50%;background:var(--blue);opacity:0.18;top:-60px;right:-80px;}
+.hv-circle-med{position:absolute;width:260px;height:260px;border-radius:50%;background:var(--mustard);opacity:0.22;bottom:60px;left:30px;}
+.hv-rect{position:absolute;width:180px;height:240px;border-radius:120px;background:var(--terra);opacity:0.2;top:120px;right:60px;}
+.hv-big-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--ff-head);font-size:8rem;font-weight:700;color:var(--blue-deep);opacity:0.07;letter-spacing:-0.05em;user-select:none;white-space:nowrap;}
+.hv-label{position:absolute;bottom:40px;left:40px;font-family:var(--ff-serif);font-style:italic;font-size:3.5rem;font-weight:300;color:var(--blue-deep);opacity:0.18;line-height:1;user-select:none;}
+.hv-dot-grid{position:absolute;bottom:30px;right:30px;display:grid;grid-template-columns:repeat(6,10px);gap:8px;}
+.hv-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-deep);opacity:0.25;}
+.page-header{padding:4.5rem 3.5rem 3rem;position:relative;overflow:hidden;}
+.ph-deco{position:absolute;right:-40px;top:-40px;width:280px;height:280px;border-radius:50%;opacity:0.12;}
+.ph-tag{font-family:var(--ff-serif);font-style:italic;font-size:17px;font-weight:300;color:var(--terra);margin-bottom:0.5rem;}
+.ph-title{font-family:var(--ff-head);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:700;letter-spacing:-0.03em;line-height:0.97;color:var(--ink);}
+.ph-title em{font-family:var(--ff-serif);font-weight:300;font-style:italic;color:var(--blue-deep);font-size:1.1em;}
+.ph-lead{font-family:var(--ff-body);font-size:15px;font-weight:300;color:var(--muted);max-width:520px;line-height:1.8;margin-top:1rem;}
+.search-wrap{position:relative;margin-bottom:1rem;}
+.search-wrap input{width:100%;padding:14px 20px 14px 48px;font-family:var(--ff-body);font-size:14px;font-weight:300;color:var(--text);background:white;border:1.5px solid var(--border);border-radius:40px;outline:none;transition:border-color 0.2s;}
+.search-wrap input:focus{border-color:var(--blue);}
+.search-wrap svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);pointer-events:none;}
+.sort-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.stab{font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:white;border:1.5px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:40px;cursor:pointer;transition:all 0.2s;}
+.stab:hover{border-color:var(--blue);color:var(--blue-deep);}
+.stab.active{background:var(--blue-deep);color:white;border-color:var(--blue-deep);}
+.cat-cloud{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:2rem;}
+.cat-pill{display:flex;align-items:center;gap:8px;border-radius:60px;padding:8px 14px 8px 9px;cursor:pointer;transition:transform 0.15s;}
+.cat-pill:hover{transform:translateY(-2px);}
+.cat-pill-icon{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.classes-body{padding:2.5rem 3.5rem;}
+.class-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;}
+.ccard{background:white;border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;cursor:pointer;display:flex;flex-direction:column;}
+.ccard:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(42,31,20,0.1);}
+.ccard-vis{height:160px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ccard-badge{position:absolute;top:12px;left:12px;font-family:var(--ff-head);font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 12px;border-radius:40px;}
+.ccard-type{position:absolute;top:12px;right:12px;font-family:var(--ff-head);font-size:10px;font-weight:600;letter-spacing:0.05em;padding:4px 10px;border-radius:40px;}
+.ccard-body{padding:1.1rem 1.1rem 1rem;display:flex;flex-direction:column;flex:1;}
+.ccard-title{font-family:var(--ff-head);font-size:16px;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.3rem;}
+.ccard-desc{font-family:var(--ff-body);font-size:12px;font-weight:300;color:var(--muted);line-height:1.65;margin-bottom:0.5rem;flex:1;}
+.ccard-instructor{font-family:var(--ff-body);font-size:11px;color:var(--blue-deep);font-weight:500;margin-bottom:0.5rem;}
+.ccard-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:0.5rem;}
+.ccard-tag{font-family:var(--ff-head);font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:var(--blue-mist);color:var(--blue-deep);}
+.ccard-meta{display:flex;gap:1rem;font-family:var(--ff-body);font-size:11px;color:var(--muted);margin-bottom:0.85rem;}
+.ccard-btn{width:100%;background:var(--cream);border:1.5px solid var(--border);font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:10px;border-radius:40px;cursor:pointer;color:var(--text);transition:all 0.2s;margin-top:auto;}
+.ccard-btn:hover{background:var(--blue-deep);color:white;border-color:var(--blue-deep);}
+.cat-section-head{display:flex;align-items:center;gap:14px;margin:2.5rem 0 1.25rem;}
+.csh-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.csh-label{font-family:var(--ff-head);font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
+.csh-line{flex:1;height:1px;background:var(--border);}
+.no-results{text-align:center;padding:4rem 2rem;font-family:var(--ff-serif);font-style:italic;font-size:1.5rem;color:var(--muted);}
+.events-body{padding:2.5rem 3.5rem;}
+.event-filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.evtab{font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:white;border:1.5px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:40px;cursor:pointer;transition:all 0.2s;}
+.evtab:hover{border-color:var(--blue);color:var(--blue-deep);}
+.evtab.active{background:var(--blue-deep);color:white;border-color:var(--blue-deep);}
+.event-period-head{font-family:var(--ff-head);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:1.25rem 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:4px;}
+.event-item{display:grid;grid-template-columns:90px 1fr auto;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.2s;border-radius:8px;margin-bottom:2px;}
+.event-item:hover{background:rgba(74,144,196,0.04);}
+.event-item.past{opacity:0.8;}
+.event-date{padding:1.5rem 1rem 1.5rem 0.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.event-month{font-family:var(--ff-head);font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.event-day{font-family:var(--ff-head);font-size:2.8rem;font-weight:700;color:var(--terra);line-height:1;letter-spacing:-0.03em;}
+.event-info{padding:1.5rem;border-left:1px solid var(--border);}
+.event-title{font-family:var(--ff-head);font-size:16px;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.3rem;}
+.event-desc{font-family:var(--ff-body);font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;}
+.event-recap{font-family:var(--ff-body);font-size:12px;font-weight:300;color:var(--blue-deep);margin-top:0.4rem;line-height:1.5;font-style:italic;}
+.event-right{padding:1.5rem 0.5rem 1.5rem 1rem;display:flex;align-items:center;}
+.etag{font-family:var(--ff-head);font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;border-radius:40px;white-space:nowrap;}
+.shop-filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem;}
+.shop-ftab{font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:white;border:1.5px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:40px;cursor:pointer;transition:all 0.2s;}
+.shop-ftab:hover{border-color:var(--blue);color:var(--blue-deep);}
+.shop-ftab.active{background:var(--blue-deep);color:white;border-color:var(--blue-deep);}
+.shop-section-head{display:flex;align-items:center;gap:14px;margin:2rem 0 1.25rem;}
+.shop-sh-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.shop-sh-lbl{font-family:var(--ff-head);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
+.shop-sh-line{flex:1;height:1px;background:var(--border);}
+.scard{background:white;border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform 0.25s,box-shadow 0.25s;display:flex;flex-direction:column;}
+.scard:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(42,31,20,0.09);}
+.scard-vis{height:140px;display:flex;align-items:center;justify-content:center;}
+.scard-body{padding:0.9rem 1rem 1rem;flex:1;display:flex;flex-direction:column;}
+.scard-type{font-family:var(--ff-head);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.scard-name{font-family:var(--ff-head);font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:4px;flex:1;}
+.scard-price{font-family:var(--ff-serif);font-style:italic;font-size:1.3rem;font-weight:300;color:var(--terra);}
+.scard-btn{margin-top:0.75rem;width:100%;background:var(--cream);border:1.5px solid var(--border);font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:9px;border-radius:40px;cursor:pointer;color:var(--text);transition:all 0.2s;}
+.scard-btn:hover{background:var(--terra);color:white;border-color:var(--terra);}
+.community-hero{min-height:52vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem;background:var(--blue-deep);position:relative;overflow:hidden;}
+.ch-deco1{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.08);top:-150px;right:-150px;}
+.ch-deco2{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);bottom:-100px;left:-80px;}
+.ch-deco3{position:absolute;width:200px;height:200px;background:var(--mustard);opacity:0.1;border-radius:50%;top:30px;left:10%;}
+.ch-content{position:relative;z-index:1;max-width:600px;}
+.ch-content h2{font-family:var(--ff-head);font-size:clamp(2.2rem,5vw,4rem);font-weight:700;letter-spacing:-0.03em;color:white;line-height:1.0;margin-bottom:1rem;}
+.ch-content h2 em{font-family:var(--ff-serif);font-style:italic;font-weight:300;color:var(--mustard-light);font-size:1.1em;}
+.ch-content p{font-family:var(--ff-body);font-size:15px;font-weight:300;color:rgba(255,255,255,0.65);max-width:440px;margin:0 auto 2.5rem;line-height:1.8;}
+.join-row{display:flex;max-width:400px;margin:0 auto;border-radius:40px;overflow:hidden;border:1px solid rgba(255,255,255,0.2);}
+.join-row input{flex:1;padding:14px 20px;border:none;font-family:var(--ff-body);font-size:14px;background:rgba(255,255,255,0.1);color:white;outline:none;}
+.join-row input::placeholder{color:rgba(255,255,255,0.35);}
+.join-row button{background:var(--mustard);color:var(--ink);border:none;padding:14px 24px;font-family:var(--ff-head);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;}
+.comm-tabs{display:flex;border-bottom:1.5px solid var(--border);padding:0 3.5rem;}
+.comm-tab{font-family:var(--ff-head);font-size:12px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;background:none;border:none;padding:16px 24px;cursor:pointer;color:var(--muted);border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.2s;}
+.comm-tab:hover{color:var(--blue-deep);}
+.comm-tab.active{color:var(--blue-deep);border-color:var(--blue-deep);}
+.comm-panel{display:none;}
+.comm-panel.active{display:block;}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;padding:3.5rem;}
+.vcard{padding:2.25rem 2rem;border-radius:16px;background:white;border:1px solid var(--border);position:relative;overflow:hidden;}
+.vcard-accent{position:absolute;top:0;left:0;right:0;height:4px;}
+.vcard:nth-child(1) .vcard-accent{background:var(--terra);}
+.vcard:nth-child(2) .vcard-accent{background:var(--blue-deep);}
+.vcard:nth-child(3) .vcard-accent{background:var(--mustard);}
+.vcard-title{font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:0.5rem;}
+.vcard-text{font-family:var(--ff-body);font-size:13px;font-weight:300;color:var(--muted);line-height:1.7;}
+.announce-list{padding:2.5rem 3.5rem;}
+.announce-card{background:white;border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1rem;position:relative;overflow:hidden;transition:box-shadow 0.2s;}
+.announce-card:hover{box-shadow:0 6px 20px rgba(42,31,20,0.07);}
+.announce-accent{position:absolute;top:0;left:0;bottom:0;width:4px;}
+.announce-meta{display:flex;align-items:center;gap:10px;margin-bottom:0.6rem;flex-wrap:wrap;}
+.announce-tag{font-family:var(--ff-head);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.announce-date{font-family:var(--ff-body);font-size:11px;color:var(--muted);}
+.announce-title{font-family:var(--ff-head);font-size:16px;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.4rem;}
+.announce-body{font-family:var(--ff-body);font-size:13px;font-weight:300;color:var(--muted);line-height:1.7;}
+.about-layout{display:grid;grid-template-columns:1fr 1fr;min-height:65vh;}
+.about-vis{background:var(--blue-pale);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:4rem;}
+.av-shape1{position:absolute;width:320px;height:320px;border-radius:50%;background:var(--blue);opacity:0.14;top:-80px;right:-80px;}
+.av-shape2{position:absolute;width:200px;height:200px;border-radius:50%;background:var(--mustard);opacity:0.18;bottom:-40px;left:-40px;}
+.av-shape3{position:absolute;width:160px;height:260px;border-radius:80px;background:var(--terra);opacity:0.12;top:80px;left:60px;}
+.av-text{position:relative;z-index:1;text-align:center;}
+.av-text .big{font-family:var(--ff-head);font-size:5rem;font-weight:700;color:var(--blue-deep);opacity:0.5;line-height:1;letter-spacing:-0.04em;}
+.av-text .sub{font-family:var(--ff-serif);font-style:italic;font-size:1.5rem;font-weight:300;color:var(--terra);margin-top:0.5rem;}
+.about-content{display:flex;flex-direction:column;justify-content:center;padding:5rem 3.5rem;}
+.about-content p{font-family:var(--ff-body);font-size:15px;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:1.25rem;}
+.season-tag{display:inline-flex;align-items:center;gap:10px;background:var(--mustard-pale);border:1px solid rgba(212,168,42,0.3);padding:10px 18px;border-radius:40px;margin-top:0.75rem;}
+.st-dot{width:8px;height:8px;border-radius:50%;background:var(--mustard);}
+.st-text{font-family:var(--ff-head);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#7A5A10;}
+footer{background:var(--ink);padding:4rem 3.5rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;}
+.fb-name{font-family:var(--ff-head);font-size:16px;font-weight:700;color:white;display:block;margin-bottom:3px;}
+.fb-chapter{font-family:var(--ff-serif);font-style:italic;font-size:14px;font-weight:300;color:var(--mustard-light);display:block;margin-bottom:0.75rem;}
+footer p,footer a{font-family:var(--ff-body);font-size:13px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.5);text-decoration:none;display:block;}
+footer a:hover{color:var(--terra-light);}
+footer h4{font-family:var(--ff-head);font-size:10px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:1rem;}
+.tooltip-box{display:none;position:fixed;background:var(--ink);color:white;font-family:var(--ff-body);font-size:11px;font-weight:300;white-space:nowrap;padding:6px 12px;border-radius:8px;pointer-events:none;z-index:9999;}
+</style>
+</head>
+<body>
+<div id="gTooltip" class="tooltip-box"></div>
+<nav>
+  <div class="nav-brand">
+    <span class="nav-brand-main">Open Creative Studio</span>
+    <span class="nav-brand-sub">The Open Ground</span>
+  </div>
+  <ul class="nav-links">
+    <li><a class="active" onclick="go('home',this)">Home</a></li>
+    <li><a onclick="go('classes',this)">Classes</a></li>
+    <li><a onclick="go('events',this)">Events</a></li>
+    <li><a onclick="go('shop',this)">Shop</a></li>
+    <li><a onclick="go('community',this)">Community</a></li>
+    <li><a onclick="go('about',this)">About</a></li>
+  </ul>
+  <button class="nav-cta" onclick="go('classes',document.querySelectorAll('.nav-links a')[1])">Enroll Now</button>
+</nav>
+
+<div id="page-home" class="page active">
+  <div class="hero-main">
+    <div class="hero-text-col">
+      <div class="hero-tag">Chapter I — The Open Ground</div>
+      <h1 class="hero-h1">Learn. Create.<br>Grow. <span class="serif-word">Together.</span></h1>
+      <p class="hero-desc">Open Creative Studio is a community learning hub offering programs in the arts, design, music, culinary skills, movement, gaming, STEM, humanities and beyond — for every curious mind.</p>
+      <div class="hero-btns">
+        <button class="btn-pill" onclick="go('classes',document.querySelectorAll('.nav-links a')[1])">Browse Programs</button>
+        <button class="btn-ghost" onclick="go('about',document.querySelectorAll('.nav-links a')[5])">Our Story</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hstat-n">19</div><div class="hstat-l">Categories</div></div>
+        <div><div class="hstat-n">100+</div><div class="hstat-l">Programs</div></div>
+        <div><div class="hstat-n">1</div><div class="hstat-l">Community</div></div>
+      </div>
+    </div>
+    <div class="hero-visual-col">
+      <div class="hv-circle-big"></div><div class="hv-circle-med"></div><div class="hv-rect"></div>
+      <div class="hv-big-text">OCS</div>
+      <div class="hv-label">Open<br>Ground</div>
+      <div class="hv-dot-grid" id="dotGrid"></div>
+    </div>
+  </div>
+  <div style="padding:2.5rem 3.5rem 3rem;background:var(--cream);border-top:1px solid var(--border);">
+    <div style="font-family:var(--ff-serif);font-style:italic;font-size:17px;font-weight:300;color:var(--terra);margin-bottom:1.25rem;">Explore our programs</div>
+    <div id="homeCatStrip" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;"></div>
+  </div>
+</div>
+
+<div id="page-classes" class="page">
+  <div class="page-header" style="background:var(--terra-pale);">
+    <div class="ph-deco" style="background:var(--terra);"></div>
+    <div class="ph-tag">All programs</div>
+    <h1 class="ph-title">Find your <em>next chapter.</em></h1>
+    <p class="ph-lead">From first-timers to lifelong learners — browse all OCS programs. Many classes span multiple categories.</p>
+  </div>
+  <div class="classes-body">
+    <div class="search-wrap">
+      <input id="classSearch" type="text" placeholder="Search programs, instructors, topics..." oninput="applyFilters()"/>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    </div>
+    <div class="sort-row" id="sortRow"></div>
+    <div class="cat-cloud" id="classCatCloud"></div>
+    <div id="classContent"></div>
+  </div>
+</div>
+
+<div id="page-events" class="page">
+  <div class="page-header" style="background:var(--sand);">
+    <div class="ph-deco" style="background:var(--mustard);"></div>
+    <div class="ph-tag">What's happening</div>
+    <h1 class="ph-title">Events & <em>Workshops</em></h1>
+    <p class="ph-lead">Upcoming gatherings and a full archive of past OCS events and recaps.</p>
+  </div>
+  <div class="events-body">
+    <div class="search-wrap">
+      <input id="eventSearch" type="text" placeholder="Search events by name, tag or description..." oninput="renderEvents()"/>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    </div>
+    <div class="event-filter-row" id="eventFilterRow"></div>
+    <div id="eventsList"></div>
+  </div>
+</div>
+
+<div id="page-shop" class="page">
+  <div class="page-header" style="background:var(--cream);border-bottom:1px solid var(--border);">
+    <div class="ph-deco" style="background:var(--blue);"></div>
+    <div class="ph-tag">The Studio Store</div>
+    <h1 class="ph-title">Carry the <em>ground</em> with you.</h1>
+    <p class="ph-lead">Merch, memberships, class passes and resources — made with intention.</p>
+  </div>
+  <div style="padding:2.5rem 3.5rem;">
+    <div class="search-wrap">
+      <input id="shopSearch" type="text" placeholder="Search products..." oninput="renderShop()"/>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A6A58" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    </div>
+    <div class="shop-filter-row" id="shopFilterRow"></div>
+    <div id="shopContent"></div>
+  </div>
+</div>
+
+<div id="page-community" class="page">
+  <div class="community-hero">
+    <div class="ch-deco1"></div><div class="ch-deco2"></div><div class="ch-deco3"></div>
+    <div class="ch-content">
+      <h2>You belong <em>here.</em></h2>
+      <p>OCS is a space for every curious person — whether you're picking up a paintbrush, a chef's knife, or garden gloves for the first time.</p>
+      <div class="join-row"><input type="email" placeholder="Your email address"/><button>Join Us</button></div>
+    </div>
+  </div>
+  <div class="comm-tabs">
+    <button class="comm-tab active" onclick="switchCommTab('values',this)">Our Values</button>
+    <button class="comm-tab" onclick="switchCommTab('announcements',this)">Announcements</button>
+  </div>
+  <div id="comm-values" class="comm-panel active">
+    <div class="values-grid">
+      <div class="vcard"><div class="vcard-accent"></div><div class="vcard-title">Openness</div><p class="vcard-text">Every background, every age, every skill level. There are no prerequisites for curiosity here.</p></div>
+      <div class="vcard"><div class="vcard-accent"></div><div class="vcard-title">Exploration</div><p class="vcard-text">We believe in trying things — across disciplines, across seasons, across what you thought you could do.</p></div>
+      <div class="vcard"><div class="vcard-accent"></div><div class="vcard-title">Community</div><p class="vcard-text">Learning is better together. OCS is a place where neighbours become collaborators become friends.</p></div>
+    </div>
+  </div>
+  <div id="comm-announcements" class="comm-panel">
+    <div class="announce-list" id="announceList"></div>
+  </div>
+</div>
+
+<div id="page-about" class="page">
+  <div class="about-layout">
+    <div class="about-vis">
+      <div class="av-shape1"></div><div class="av-shape2"></div><div class="av-shape3"></div>
+      <div class="av-text"><div class="big">OCS</div><div class="sub">The Open Ground</div></div>
+    </div>
+    <div class="about-content">
+      <div class="ph-tag">Our story</div>
+      <h2 class="ph-title" style="font-size:clamp(2rem,3.5vw,3.2rem);margin-bottom:1.5rem;">Built on <em>open ground.</em></h2>
+      <p>Open Creative Studio was born from a simple idea: that learning shouldn't stop after school. We are a community hub where people of all ages come to explore art, design, music, cooking, nature, gaming, STEM, humanities and so much more.</p>
+      <p>The Open Ground is our first chapter — a season of planting, building, and discovering what this community needs. Each chapter ahead will carry its own name, its own focus, its own spirit.</p>
+      <p>We are open to every curious soul who walks through our door.</p>
+      <div class="season-tag"><div class="st-dot"></div><span class="st-text">Now: Chapter I — The Open Ground</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <span class="fb-name">Open Creative Studio</span>
+    <span class="fb-chapter">The Open Ground — Chapter I</span>
+    <p>A community creative learning hub<br>coming to a location near you.</p>
+  </div>
+  <div><h4>Programs</h4><a onclick="go('classes',document.querySelectorAll('.nav-links a')[1])">All Classes</a><a onclick="go('events',document.querySelectorAll('.nav-links a')[2])">Events</a><a onclick="go('shop',document.querySelectorAll('.nav-links a')[3])">Shop</a></div>
+  <div><h4>Connect</h4><a>Instagram</a><a>Newsletter</a><a>Contact</a></div>
+  <div><h4>Info</h4><a onclick="go('about',document.querySelectorAll('.nav-links a')[5])">Our Story</a><a onclick="go('community',document.querySelectorAll('.nav-links a')[4])">Community</a><a>FAQ</a></div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────
+//  CATEGORIES  (FIX 2: renamed; FIX 3: new Studio Crafts)
+// ─────────────────────────────────────────────────────────
+var cats = [
+  {id:'arts',      label:'Visual Arts',                 tip:'Painting · Drawing · Mixed Media · Printmaking · Collage',                                   bg:'var(--terra-pale)',  iconBg:'var(--terra)'},
+  {id:'design',    label:'Design & Media',              tip:'Graphic Design · Photography · Videography · Web Development · Branding',                    bg:'var(--mustard-pale)',iconBg:'var(--mustard)'},
+  {id:'crafts',    label:'Studio Crafts',               tip:'Pottery · Carpentry · Jewelry Making · Leatherwork · Candle Making · Stained Glass',         bg:'var(--amber-pale)',  iconBg:'var(--amber)'},
+  {id:'music',     label:'Music',                       tip:'Guitar · Vocals · Music Production · Percussion · Piano · Songwriting',                       bg:'var(--blue-pale)',   iconBg:'var(--blue-deep)'},
+  {id:'dance',     label:'Dance',                       tip:'Contemporary · Hip Hop · Jazz · Commercial · Heels · Ballet · Afrobeats',                      bg:'var(--plum-pale)',   iconBg:'var(--plum)'},
+  {id:'movement',  label:'Movement & Wellness',         tip:'Yoga · Pilates · Lagree · Spin · Somatic Stretching · Breathwork',                            bg:'var(--rust-pale)',   iconBg:'var(--coral)'},
+  {id:'defense',   label:'Self-Defense & Martial Arts', tip:'Karate · Taekwondo · Jiu-Jitsu · Kickboxing · Self-Defense Essentials',                       bg:'var(--sand)',        iconBg:'var(--ink)'},
+  {id:'sports',    label:'Exercise & Sports',           tip:'Basketball · Soccer · Dodgeball · Pickleball · Track · Ice Skating · Gymnastics · Climbing',   bg:'var(--blue-mist)',   iconBg:'var(--blue)'},
+  {id:'culinary',  label:'Culinary Arts',               tip:'World Cuisine · Baking & Pastry · Plant-Based · Fermentation · Knife Skills',                  bg:'var(--rust-pale)',   iconBg:'var(--rust)'},
+  {id:'nature',    label:'Nature & Sustainability',     tip:'Urban Gardening · Farming · Herbs · Composting · Ecology · Outdoor Learning · Zero Waste',     bg:'var(--forest-pale)', iconBg:'var(--sage-dark)'},
+  {id:'fashion',   label:'Fashion Design',              tip:'Styling · Textiles · Crochet · Pattern Making · Upcycling · Costume Design',                   bg:'var(--plum-pale)',   iconBg:'var(--mauve)'},
+  {id:'finance',   label:'Life Skills',                 tip:'Financial Literacy · Investing · Digital Literacy · Freelance Finance · Public Speaking',       bg:'var(--mustard-pale)',iconBg:'var(--mustard)'},
+  {id:'gaming',    label:'Gaming',                      tip:'Video Games · Board Games · Card Games · Esports · Game Design · Clubs & Tournaments',          bg:'var(--blue-mist)',   iconBg:'var(--blue-deep)'},
+  {id:'stem',      label:'STEM',                        tip:'Coding · Robotics · Science Labs · Math · Engineering · AI & Tech · Space & Astronomy',        bg:'var(--forest-pale)', iconBg:'var(--forest)'},
+  {id:'humanities',label:'Language Arts',               tip:'Poetry · Story Writing · Reading Club · Creative Nonfiction · Book Discussions',                bg:'var(--rose-pale)',   iconBg:'var(--rose)'},
+  {id:'community', label:'Community Engagement',        tip:'Event Planning · Policy Advocacy · Food Drives · Resource Collection · Civic Action',           bg:'var(--teal-pale)',   iconBg:'var(--teal)'},
+  {id:'culture',   label:'Humanities & Culture',        tip:'Cultural Celebrations · World History · Heritage Arts · Global Traditions · Language',          bg:'var(--mustard-pale)',iconBg:'var(--terra-dark)'},
+  {id:'seniors',   label:'Healthy Aging',               tip:'Gentle Movement · Tai-Chi · Swimming · Cognitive Games · Old School Socials · Chair Yoga',     bg:'var(--blue-pale)',   iconBg:'var(--blue)'},
+  {id:'youth',     label:'Youth & Kids',                tip:'Ages 3–18 · Arts · STEM · Sports · Cooking · Music · Dance · Karate · Cultural Programs',       bg:'var(--sage-pale)',   iconBg:'var(--sage-dark)'},
+];
+
+// ─────────────────────────────────────────────────────────
+//  ICONS
+// ─────────────────────────────────────────────────────────
+var icons = {
+  arts:      '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="7" y="7" width="22" height="22" rx="2" fill="white" fill-opacity="0.1" stroke="white" stroke-width="1.8" opacity="0.8"/><path d="M11 21 L15 17 L19 20 L23 15" stroke="white" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="14" r="1.5" fill="white" opacity="0.7"/></svg>',
+  design:    '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="7" y="8" width="22" height="16" rx="3" fill="white" fill-opacity="0.12" stroke="white" stroke-width="1.5" opacity="0.7"/><line x1="7" y1="13" x2="29" y2="13" stroke="white" stroke-width="1.2" opacity="0.5"/><path d="M12 20 L15 17 L18 19 L22 15 L25 18" stroke="white" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  crafts:    '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="16" r="7" stroke="white" stroke-width="1.8" fill="white" fill-opacity="0.1" opacity="0.85"/><path d="M14 20 Q18 28 22 20" stroke="white" stroke-width="1.6" fill="none" opacity="0.7" stroke-linecap="round"/><line x1="18" y1="9" x2="18" y2="7" stroke="white" stroke-width="2" opacity="0.8" stroke-linecap="round"/><line x1="13" y1="11" x2="11.5" y2="9.5" stroke="white" stroke-width="2" opacity="0.7" stroke-linecap="round"/><line x1="23" y1="11" x2="24.5" y2="9.5" stroke="white" stroke-width="2" opacity="0.7" stroke-linecap="round"/></svg>',
+  music:     '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><ellipse cx="12" cy="25" rx="4" ry="2.8" fill="white" opacity="0.8"/><ellipse cx="25" cy="22" rx="3.5" ry="2.5" fill="white" opacity="0.65"/><line x1="16" y1="25" x2="16" y2="11" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/><line x1="16" y1="11" x2="28.5" y2="9" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/><line x1="28.5" y1="9" x2="28.5" y2="22" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/></svg>',
+  dance:     '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="7" r="3" fill="white" opacity="0.9"/><line x1="18" y1="10" x2="18" y2="20" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.85"/><line x1="18" y1="14" x2="10" y2="18" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.75"/><line x1="18" y1="14" x2="26" y2="8" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.8"/><line x1="18" y1="20" x2="13" y2="29" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.7"/><line x1="18" y1="20" x2="26" y2="24" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.6"/></svg>',
+  movement:  '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="7" r="3" fill="white" opacity="0.9"/><line x1="18" y1="10" x2="18" y2="20" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.8"/><path d="M10 14 Q14 12 18 14 Q22 12 26 14" stroke="white" stroke-width="2" fill="none" opacity="0.85" stroke-linecap="round"/><path d="M18 20 Q15 24 12 27" stroke="white" stroke-width="2" fill="none" opacity="0.65" stroke-linecap="round"/><path d="M18 20 Q21 24 24 27" stroke="white" stroke-width="2" fill="none" opacity="0.65" stroke-linecap="round"/></svg>',
+  defense:   '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M18 4 L28 9 L28 20 Q28 28 18 32 Q8 28 8 20 L8 9 Z" stroke="white" stroke-width="1.8" fill="white" fill-opacity="0.1" opacity="0.8"/><line x1="18" y1="12" x2="18" y2="24" stroke="white" stroke-width="2" opacity="0.9" stroke-linecap="round"/><line x1="12" y1="18" x2="24" y2="18" stroke="white" stroke-width="2" opacity="0.9" stroke-linecap="round"/></svg>',
+  sports:    '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="10" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/><path d="M18 8 Q22 13 22 18 Q22 23 18 28" stroke="white" stroke-width="1.5" fill="none" opacity="0.8"/><path d="M18 8 Q14 13 14 18 Q14 23 18 28" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/><line x1="8" y1="18" x2="28" y2="18" stroke="white" stroke-width="1.3" opacity="0.5"/></svg>',
+  culinary:  '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M11 19 Q8 18 7 15 Q6 11 9 9 Q11 8 13 9 Q13 6 18 6 Q23 6 23 9 Q25 8 27 9 Q30 11 29 15 Q28 18 25 19 Z" fill="white" fill-opacity="0.15" stroke="white" stroke-width="1.6" opacity="0.85" stroke-linejoin="round"/><rect x="11" y="19" width="14" height="4" fill="white" opacity="0.55"/><rect x="11" y="23" width="14" height="2.5" fill="white" opacity="0.35"/></svg>',
+  nature:    '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="14" r="5" fill="white" opacity="0.9"/><circle cx="13" cy="16" r="4.5" fill="white" opacity="0.88"/><circle cx="23" cy="16" r="4.5" fill="white" opacity="0.88"/><circle cx="11" cy="20" r="4" fill="white" opacity="0.85"/><circle cx="25" cy="20" r="4" fill="white" opacity="0.85"/><circle cx="18" cy="20" r="4.5" fill="white" opacity="0.88"/><rect x="15" y="21" width="6" height="1.5" fill="white" opacity="0.9"/><rect x="16.5" y="22.5" width="3" height="6" fill="white" opacity="0.65" rx="1"/></svg>',
+  fashion:   '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M13 6 L18 11 L23 6 L26 13 L26 28 L10 28 L10 13 Z" fill="white" fill-opacity="0.12" stroke="white" stroke-width="1.6" opacity="0.75" stroke-linejoin="round"/><line x1="14" y1="18" x2="22" y2="18" stroke="white" stroke-width="1.4" opacity="0.85"/><line x1="14" y1="22" x2="22" y2="22" stroke="white" stroke-width="1.4" opacity="0.65"/></svg>',
+  finance:   '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="13" cy="14" r="6" stroke="white" stroke-width="1.8" fill="white" fill-opacity="0.12" opacity="0.85"/><circle cx="13" cy="14" r="2.5" fill="white" opacity="0.7"/><line x1="19" y1="17" x2="30" y2="28" stroke="white" stroke-width="2" opacity="0.8" stroke-linecap="round"/></svg>',
+  gaming:    '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="6" y="11" width="24" height="15" rx="5" fill="white" fill-opacity="0.12" stroke="white" stroke-width="1.6" opacity="0.75"/><line x1="13" y1="18" x2="13" y2="22" stroke="white" stroke-width="1.8" opacity="0.9" stroke-linecap="round"/><line x1="11" y1="20" x2="15" y2="20" stroke="white" stroke-width="1.8" opacity="0.9" stroke-linecap="round"/><circle cx="22" cy="18" r="1.5" fill="white" opacity="0.85"/><circle cx="25" cy="21" r="1.5" fill="white" opacity="0.7"/></svg>',
+  stem:      '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="5" fill="white" opacity="0.85"/><ellipse cx="18" cy="18" rx="14" ry="6" stroke="white" stroke-width="1.5" fill="none" opacity="0.5"/><ellipse cx="18" cy="18" rx="14" ry="6" stroke="white" stroke-width="1.5" fill="none" opacity="0.4" transform="rotate(60 18 18)"/><ellipse cx="18" cy="18" rx="14" ry="6" stroke="white" stroke-width="1.5" fill="none" opacity="0.3" transform="rotate(120 18 18)"/></svg>',
+  humanities:'<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M8 28 L8 10 Q8 8 10 8 Q14 8 18 12 Q22 8 26 8 Q28 8 28 10 L28 28" stroke="white" stroke-width="1.8" fill="white" fill-opacity="0.1" opacity="0.85" stroke-linecap="round" stroke-linejoin="round"/><line x1="18" y1="12" x2="18" y2="28" stroke="white" stroke-width="1.4" opacity="0.5" stroke-linecap="round"/><line x1="8" y1="28" x2="28" y2="28" stroke="white" stroke-width="2" opacity="0.85" stroke-linecap="round"/></svg>',
+  community: '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="12" cy="13" r="3.5" fill="white" opacity="0.75"/><circle cx="24" cy="13" r="3.5" fill="white" opacity="0.75"/><circle cx="18" cy="22" r="4" fill="white" opacity="0.9"/><path d="M12 16 Q12 20 16 21" stroke="white" stroke-width="1.5" fill="none" opacity="0.55" stroke-linecap="round"/><path d="M24 16 Q24 20 20 21" stroke="white" stroke-width="1.5" fill="none" opacity="0.55" stroke-linecap="round"/></svg>',
+  culture:   '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="11" stroke="white" stroke-width="1.4" fill="none" opacity="0.5"/><path d="M7 18 Q12 14 18 18 Q24 22 29 18" stroke="white" stroke-width="1.5" fill="none" opacity="0.8" stroke-linecap="round"/><path d="M18 7 Q14 12 18 18 Q22 24 18 29" stroke="white" stroke-width="1.5" fill="none" opacity="0.7" stroke-linecap="round"/><circle cx="18" cy="18" r="2.5" fill="white" opacity="0.9"/></svg>',
+  seniors:   '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><path d="M18 28 Q8 21 8 14 Q8 9 13 8 Q16 7 18 11 Q20 7 23 8 Q28 9 28 14 Q28 21 18 28Z" fill="white" fill-opacity="0.15" stroke="white" stroke-width="1.6" opacity="0.8"/><path d="M10 18 L13 18 L15 14 L17 22 L19 18 L21 18 L23 16 L25 18" stroke="white" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  youth:     '<svg width="26" height="26" viewBox="0 0 36 36" fill="none"><polygon points="18,4 21,13 31,13 23,19 26,28 18,22 10,28 13,19 5,13 15,13" fill="white" opacity="0.7"/></svg>',
+};
+
+// ─────────────────────────────────────────────────────────
+//  SORT OPTIONS
+// ─────────────────────────────────────────────────────────
+var sortOptions = [
+  {id:'all',        label:'All Classes',       tip:'Show everything'},
+  {id:'drop-in',    label:'Drop-in Welcome',   tip:'No registration needed'},
+  {id:'signup',     label:'Sign-up Based',     tip:'Pre-registration required'},
+  {id:'team',       label:'Team Based',        tip:'Play or compete as a team'},
+  {id:'group',      label:'Group Class',       tip:'Instructor-led group sessions'},
+  {id:'individual', label:'Individual Lessons',tip:'One-on-one private lessons'},
+  {id:'beginner',   label:'Beginner',          tip:'No experience needed — start here'},
+  {id:'advancing',  label:'Advancing',         tip:'Some experience recommended'},
+  {id:'seniors',    label:'55+',               tip:'Programs designed for 55 and up'},
+  {id:'alllevels',  label:'All Levels',        tip:'Open to everyone regardless of experience'},
+  {id:'youth',      label:'Youth & Kids',      tip:'Programs for kids and teens'},
+  {id:'weekend',    label:'Weekends Only',     tip:'Saturday or Sunday only'},
+];
+
+var instructorMap = {
+  arts:['Maya Chen','Priya Osei'],design:['Jordan Lee','Priya Osei'],crafts:['Rafael Moreno','Isabelle Tran'],
+  music:['Sam Rivera','Amara Diallo'],dance:['Sofia Delgado','Kenji Tanaka'],movement:['Lena Hoffman','Sofia Delgado'],
+  defense:['Kenji Tanaka','Marcus Obi'],sports:['Marcus Obi','Jordan Lee'],culinary:['Nadia Kowalski','Ravi Menon'],
+  nature:['Lena Hoffman','Dr. Priya Osei'],fashion:['Isabelle Tran','Maya Chen'],finance:['Maya Chen','Nadia Kowalski'],
+  gaming:['Alex Park','Jordan Lee'],stem:['Dr. Priya Osei','Alex Park'],humanities:['Amara Diallo','Maya Chen'],
+  community:['Ravi Menon','Amara Diallo'],culture:['Amara Diallo','Ravi Menon'],seniors:['Lena Hoffman','Sofia Delgado'],
+  youth:['Amara Diallo','Jordan Lee'],
+};
+
+// ─────────────────────────────────────────────────────────
+//  CLASSES (including new Studio Crafts + more team-based)
+// ─────────────────────────────────────────────────────────
+var classes = [
+  // VISUAL ARTS
+  {cats:['arts'],title:'Open Studio Painting',desc:'Unstructured studio time with instructor guidance. Oils, acrylics, watercolour.',level:'All levels',day:'Tues & Thurs',type:'drop-in',format:'group'},
+  {cats:['arts'],title:'Drawing from Life',desc:'Figure and still-life sessions with rotating subjects each week.',level:'Intermediate',day:'Fridays',type:'signup',format:'group'},
+  {cats:['arts','humanities'],title:'Visual Storytelling',desc:'Combine image-making and narrative to tell personal stories through mixed media.',level:'All levels',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['arts'],title:'Printmaking Basics',desc:'Linocut, monoprint and screen printing in a hands-on studio.',level:'Beginner',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['arts','community'],title:'Mural Design Collective',desc:'Collaborative large-scale mural design from concept to wall — work as a team to leave your mark.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  // DESIGN & MEDIA
+  {cats:['design'],title:'Graphic Design Foundations',desc:'Typography, layout and colour theory using Adobe and Canva tools.',level:'Beginner',day:'Mondays',type:'signup',format:'group'},
+  {cats:['design'],title:'Digital Illustration',desc:'Create expressive digital artwork using tablets and Procreate.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['design','community'],title:'Community Campaign Design',desc:'Design posters, social media and print materials for real local causes.',level:'All levels',day:'Tuesdays',type:'signup',format:'group'},
+  {cats:['design'],title:'Photography & Editing',desc:'Composition, lighting, and post-production with Lightroom.',level:'All levels',day:'Sundays',type:'drop-in',format:'individual'},
+  {cats:['design'],title:'Videography & Editing',desc:'Shoot, edit and produce short-form video content using Premiere Pro.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['design','stem'],title:'Web Development Intro',desc:'HTML, CSS and basic JavaScript — build your first website from scratch.',level:'Beginner',day:'Wednesdays',type:'signup',format:'group'},
+  // STUDIO CRAFTS (NEW CATEGORY)
+  {cats:['crafts'],title:'Hand-Building Pottery',desc:'Sculpt with clay using pinch, coil and slab techniques — no wheel required. Fire and glaze your own pieces.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['crafts'],title:'Wheel-Throwing Ceramics',desc:'Learn to centre clay and throw on the pottery wheel — from bowls to vases.',level:'All levels',day:'Tues & Thurs',type:'signup',format:'group'},
+  {cats:['crafts'],title:'Intro to Carpentry',desc:'Learn the fundamentals of woodworking — tools, joinery, measuring and building your first small project.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['crafts'],title:'Furniture Building Workshop',desc:'Design and build a functional piece of furniture — shelves, benches or side tables — in a team setting.',level:'Intermediate',day:'Sundays',type:'signup',format:'team'},
+  {cats:['crafts'],title:'Jewelry Making Fundamentals',desc:'Work with wire, metal, resin and beads to create wearable art from scratch.',level:'Beginner',day:'Wednesdays',type:'drop-in',format:'group'},
+  {cats:['crafts'],title:'Silversmithing & Metalwork',desc:'Cut, shape and solder metal to create your own silver jewelry and small sculptures.',level:'Intermediate',day:'Fridays',type:'signup',format:'group'},
+  {cats:['crafts'],title:'Candle Making & Aromatherapy',desc:'Pour, scent and style your own candles — soy wax, essential oils and creative moulds.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['crafts','nature'],title:'Natural Dyeing & Eco-Printing',desc:'Use plants, bark and flowers to dye fabric and create botanical prints on cloth.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['crafts'],title:'Leatherwork & Bookbinding',desc:'Hand-stitch leather goods and hand-bound journals using traditional craft techniques.',level:'All levels',day:'Thursdays',type:'signup',format:'group'},
+  {cats:['crafts'],title:'Stained Glass Studio',desc:'Cut, grind and lead-join coloured glass into panels, suncatchers and decorative art.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['crafts','community'],title:'Community Mosaic Project',desc:'Collaborate on a large mosaic piece for the OCS space — design, tile and grout as a group.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  // MUSIC
+  {cats:['music'],title:'Guitar — Private Lessons',desc:'One-on-one guitar instruction tailored to your goals and style.',level:'All levels',day:'By appt.',type:'signup',format:'individual'},
+  {cats:['music'],title:'Vocal Exploration',desc:'Develop tone, range and confidence through guided voice practice.',level:'All levels',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['music'],title:'Music Production 101',desc:'Create beats, arrange tracks and mix using Ableton or GarageBand.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['music'],title:'Rhythm & Percussion',desc:'Explore hand drums, djembe, and ensemble percussion in community.',level:'All levels',day:'Thursdays',type:'drop-in',format:'group'},
+  {cats:['music'],title:'Piano — Private Lessons',desc:'Classical and contemporary piano for beginners through advanced students.',level:'All levels',day:'By appt.',type:'signup',format:'individual'},
+  {cats:['music','culture'],title:'Global Sounds Ensemble',desc:'Explore musical traditions from West Africa, Latin America, South Asia and beyond.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  // DANCE
+  {cats:['dance','movement'],title:'Contemporary Dance',desc:'Fluid, expressive movement exploring space, breath and body awareness.',level:'All levels',day:'Tues & Thurs',type:'drop-in',format:'group'},
+  {cats:['dance'],title:'Hip Hop Fundamentals',desc:'Foundational grooves, footwork and freestyle — energetic and welcoming.',level:'Beginner',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['dance'],title:'Jazz & Commercial Dance',desc:'Stage-ready technique, performance quality and commercial choreography.',level:'Intermediate',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['dance'],title:'Heels & Sensual Dance',desc:'Confidence, femininity and power through heel-based movement.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['dance'],title:'Ballet Foundations',desc:'Classical technique, posture and grace — open to adults and teens.',level:'Beginner',day:'Mondays',type:'signup',format:'group'},
+  {cats:['dance','culture'],title:'Afrobeats & World Dance',desc:'Celebrate movement, rhythm and global cultural traditions through dance.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['dance','culture'],title:'Bollywood & South Asian Dance',desc:'Vibrant choreography drawing from classical Bharatanatyam, folk and modern Bollywood.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['dance','culture'],title:'Latin Dance — Salsa & Cumbia',desc:'Partner and solo Latin dance styles rooted in community celebration and joy.',level:'Beginner',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['dance','community'],title:'Flash Mob Choreography',desc:'Collaborate to design and perform a surprise public dance — team rehearsals leading to a live event.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  // MOVEMENT
+  {cats:['movement'],title:'Yoga — Hatha & Vinyasa',desc:'Breathwork, alignment and flow for all bodies. Morning and evening sessions.',level:'All levels',day:'Mon & Wed',type:'drop-in',format:'group'},
+  {cats:['movement'],title:'Pilates Mat Class',desc:'Core strength, flexibility and postural balance in a focused group setting.',level:'All levels',day:'Tues & Thurs',type:'signup',format:'group'},
+  {cats:['movement'],title:'Pilates — Private Sessions',desc:'One-on-one reformer Pilates tailored to your body and goals.',level:'All levels',day:'By appt.',type:'signup',format:'individual'},
+  {cats:['movement'],title:'Lagree Method',desc:'High-intensity, low-impact Megaformer training. Results-driven and precise.',level:'Intermediate',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['movement'],title:'Spin / Indoor Cycling',desc:'High-energy group cycling sessions with motivating music and coaching.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['movement','nature'],title:'Outdoor Yoga & Mindfulness',desc:'Nature-based yoga and breathwork sessions in OCS outdoor and garden spaces.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  // SELF-DEFENSE
+  {cats:['defense'],title:'Shotokan Karate',desc:'Traditional karate fundamentals — kata, kihon and sparring in a respectful dojo.',level:'All levels',day:'Mon & Wed',type:'signup',format:'group'},
+  {cats:['defense'],title:'Taekwondo',desc:'Kicks, patterns and sparring — discipline and athleticism in equal measure.',level:'All levels',day:'Tues & Thurs',type:'signup',format:'group'},
+  {cats:['defense'],title:'Brazilian Jiu-Jitsu',desc:'Ground-based grappling, submissions and self-defense fundamentals.',level:'Beginner',day:'Mon & Wed',type:'signup',format:'group'},
+  {cats:['defense'],title:'Self-Defense Essentials',desc:'Practical awareness, de-escalation and physical defense for everyday life.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['defense'],title:'Kickboxing Fitness',desc:'Cardio-based kickboxing combining technique and full-body conditioning.',level:'Beginner',day:'Tues & Thurs',type:'drop-in',format:'group'},
+  // SPORTS (more team-based)
+  {cats:['sports'],title:'Volleyball — Open Court',desc:'Drop-in court time plus skill drills. Friendly and competitive sessions.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['sports'],title:'Basketball Open Gym',desc:'Open court, pick-up games and structured play. All skill levels welcome.',level:'All levels',day:'Fridays',type:'drop-in',format:'team'},
+  {cats:['sports'],title:'Dodgeball League',desc:'Casual recreational dodgeball — fun, fast and always a good time.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  {cats:['sports'],title:'Pickleball Club',desc:'Fast-growing racquet sport — learn the basics or level up your game.',level:'All levels',day:'Sundays',type:'drop-in',format:'team'},
+  {cats:['sports'],title:'Soccer Pickup Matches',desc:'Informal 5-a-side and 7-a-side pickup soccer — just show up and play.',level:'All levels',day:'Sundays',type:'drop-in',format:'team'},
+  {cats:['sports'],title:'Ultimate Frisbee',desc:'Fast-paced, non-contact team sport — great for newcomers and experienced players alike.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['sports'],title:'Relay & Team Track Events',desc:'Sprint relays, obstacle courses and team track challenges — fun and competitive.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  {cats:['sports'],title:'Track & Field',desc:'Sprint, jump and throw — structured training sessions for all athletic levels.',level:'All levels',day:'Saturdays',type:'signup',format:'individual'},
+  {cats:['sports'],title:'Ice Skating',desc:'Learn to skate or develop confidence on the ice in a welcoming group setting.',level:'Beginner',day:'Sundays',type:'signup',format:'group'},
+  {cats:['sports'],title:'Gymnastics Foundations',desc:'Tumbling, balance and body control — fun for kids and adults alike.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['sports'],title:'Rock Climbing Intro',desc:'Top-rope climbing technique, footwork and safety at an indoor wall.',level:'Beginner',day:'Fridays',type:'drop-in',format:'group'},
+  // CULINARY
+  {cats:['culinary','culture'],title:'World Cuisine Kitchen',desc:'Cook your way around the globe — techniques and recipes from different cultures.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['culinary'],title:'Baking & Pastry Arts',desc:'Breads, pastries and desserts with professional baking techniques.',level:'Beginner',day:'Sundays',type:'signup',format:'group'},
+  {cats:['culinary','nature'],title:'Plant-Based & Seasonal Cooking',desc:'Nourishing, sustainable cooking rooted in local and seasonal whole foods.',level:'All levels',day:'Wednesdays',type:'drop-in',format:'group'},
+  {cats:['culinary','nature'],title:'Fermentation & Preservation',desc:'Kombucha, kimchi, sourdough and seasonal preservation methods.',level:'Intermediate',day:'Fridays',type:'signup',format:'group'},
+  {cats:['culinary','community'],title:'Community Kitchen & Food Drive',desc:'Cook and prepare meals for community members in need.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['culinary','culture'],title:'Heritage Cooking Series',desc:'Recipes and traditions passed down through generations — explore the food stories of diverse communities.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['culinary','community'],title:'Neighbourhood Cook-Off',desc:'Team cooking challenge — groups plan, cook and plate a full menu for community tasting and voting.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  // NATURE
+  {cats:['nature'],title:'Urban Container Gardening',desc:'Grow food and flowers in small spaces — balconies, patios and windowsills.',level:'Beginner',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['nature'],title:'Medicinal Herbs & Botanics',desc:'Identify, grow and use local medicinal plants and herbs.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['nature','stem'],title:'Composting & Soil Science',desc:'Build healthy soil, reduce waste and understand living ecosystems.',level:'Beginner',day:'Thursdays',type:'drop-in',format:'group'},
+  {cats:['nature'],title:'Seasonal Flower Arranging',desc:'Forage and arrange seasonal blooms — rooted in nature and intuition.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['nature'],title:'Community Farming & Land Stewardship',desc:'Hands-on farming at OCS community plots — planting, tending and harvesting.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['nature'],title:'Outdoor Learning & Forest School',desc:'Education in nature — ecology, observation, survival basics and earth connection.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['nature','stem'],title:'Climate & Sustainability Science',desc:'Understand climate systems, local ecology and the science behind sustainability.',level:'All levels',day:'Thursdays',type:'signup',format:'group'},
+  {cats:['nature','community'],title:'Zero Waste Living Workshop',desc:'Practical strategies to reduce waste at home, in your community and beyond.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  // FASHION
+  {cats:['fashion'],title:'Styling Fundamentals',desc:'Colour theory, body proportion and personal style — develop your fashion eye.',level:'All levels',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['fashion'],title:'Textiles & Fabric Exploration',desc:'Understand fibres, weaves and sustainable materials for creative fashion.',level:'Beginner',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['fashion'],title:'Crochet & Fibre Arts',desc:'Learn crochet from the foundation up — stitches, patterns and your first wearable.',level:'Beginner',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['fashion','nature'],title:'Upcycling & Sustainable Fashion',desc:'Transform thrifted and secondhand pieces — conscious creativity in action.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['fashion','culture'],title:'Traditional Textile Arts',desc:'Explore weaving, embroidery and textile traditions from global cultures.',level:'All levels',day:'Saturdays',type:'signup',format:'group'},
+  // LIFE SKILLS
+  {cats:['finance'],title:'Budgeting for Real Life',desc:'Build a personal budget that works — track spending, set goals and save with purpose.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['finance'],title:'Investing 101',desc:'Understand stocks, ETFs, RRSPs and TFSAs. Demystify the basics of growing wealth.',level:'Beginner',day:'Sundays',type:'signup',format:'group'},
+  {cats:['finance','stem'],title:'Digital Literacy for Everyone',desc:'Navigate devices, apps, online safety and digital tools with confidence.',level:'Beginner',day:'Mondays',type:'signup',format:'group'},
+  {cats:['finance'],title:'Freelance & Self-Employment Finance',desc:'Taxes, invoicing, rates and financial planning for creative entrepreneurs.',level:'All levels',day:'Tuesdays',type:'signup',format:'group'},
+  {cats:['finance','community'],title:'Credit, Debt & Financial Health',desc:'Understand credit scores, manage debt and build a healthier financial foundation.',level:'All levels',day:'Wednesdays',type:'drop-in',format:'group'},
+  // GAMING
+  {cats:['gaming'],title:'Video Game Club',desc:'Weekly drop-in sessions — play, compete and connect across all platforms and genres.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['gaming','sports'],title:'Esports Training — Competitive Play',desc:'Structured coaching and team scrimmages for players looking to compete.',level:'Intermediate',day:'Tues & Thurs',type:'signup',format:'team'},
+  {cats:['gaming'],title:'Board Game Nights',desc:'Catan, Ticket to Ride, D&D and more — strategy to party games.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['gaming'],title:'Trading Card Game Club',desc:'Magic: The Gathering, Pokemon TCG and Yu-Gi-Oh — casual play and tournaments.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['gaming','design','stem'],title:'Game Design Foundations',desc:'Design your own board or video game — mechanics, rules, playtesting and iteration.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['gaming','humanities'],title:'Tabletop RPG Campaign',desc:'Join an ongoing D&D or Pathfinder campaign. Storytelling, strategy, world-building.',level:'All levels',day:'Sundays',type:'signup',format:'team'},
+  {cats:['gaming','sports'],title:'OCS Esports Tournament',desc:'Monthly in-house tournaments across multiple titles. Open to all OCS members.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  // STEM
+  {cats:['stem'],title:'Intro to Coding — Python',desc:'Learn programming fundamentals through Python. Variables, loops, functions and projects.',level:'Beginner',day:'Mondays',type:'signup',format:'group'},
+  {cats:['stem','design'],title:'Web Development Bootcamp',desc:'HTML, CSS, JavaScript and responsive design — build and deploy your own website.',level:'Beginner',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['stem'],title:'Robotics & Electronics',desc:'Build and program robots using Arduino and LEGO Mindstorms.',level:'All levels',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['stem'],title:'AI & Machine Learning Intro',desc:'Understand how AI works, explore tools and build your first simple ML model.',level:'Beginner',day:'Tuesdays',type:'signup',format:'group'},
+  {cats:['stem','nature'],title:'Science Lab Explorers',desc:'Hands-on experiments in chemistry, biology and environmental science.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['stem'],title:'Math Club & Competitions',desc:'Problem-solving, puzzles and competition prep.',level:'All levels',day:'Thursdays',type:'signup',format:'group'},
+  {cats:['stem','nature'],title:'Space & Astronomy Club',desc:'Stargazing nights, telescope sessions, space history and astrophysics basics.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['stem','community'],title:'Engineering Design Challenge',desc:'Build bridges, towers and machines from everyday materials.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['stem','design'],title:'App Development — iOS & Android',desc:'Design, build and publish your own mobile app using Swift or React Native.',level:'Intermediate',day:'Tuesdays',type:'signup',format:'group'},
+  {cats:['stem'],title:'3D Printing & Digital Fabrication',desc:'Design and print your own 3D objects using TinkerCAD and Fusion 360.',level:'Beginner',day:'Fridays',type:'signup',format:'group'},
+  // LANGUAGE ARTS (formerly Humanities)
+  {cats:['humanities'],title:'Poetry Workshop',desc:'Write, share and explore poetry — from free verse to form. All voices welcome.',level:'All levels',day:'Tuesdays',type:'drop-in',format:'group'},
+  {cats:['humanities'],title:'Short Story Writing',desc:'Develop plot, character and voice in a supportive weekly writing workshop.',level:'All levels',day:'Thursdays',type:'signup',format:'group'},
+  {cats:['humanities'],title:'OCS Reading Club',desc:'Monthly book selection with guided discussion, reflection and community connection.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['humanities'],title:'Creative Nonfiction & Essay',desc:'Memoir, personal essay and reported narrative — find the story in your own life.',level:'Intermediate',day:'Wednesdays',type:'signup',format:'group'},
+  {cats:['humanities','community'],title:'Spoken Word & Open Mic',desc:'A monthly open-mic night for poets, storytellers and performers of all kinds.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['humanities','nature'],title:'Nature Writing & Field Journaling',desc:'Write from the natural world — observation, reflection and literary naturalism.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['humanities'],title:'Collaborative Zine Making',desc:'Design, write and print your own zine with a team — from concept to stapled final copy.',level:'All levels',day:'Saturdays',type:'signup',format:'team'},
+  // COMMUNITY ENGAGEMENT
+  {cats:['community'],title:'Event Planning Fundamentals',desc:'Learn logistics, promotion, budgeting and coordination for real community events.',level:'Beginner',day:'Saturdays',type:'signup',format:'group'},
+  {cats:['community'],title:'Policy Advocacy & Civic Action',desc:'Understand local government and learn how to create change.',level:'All levels',day:'Wednesdays',type:'drop-in',format:'group'},
+  {cats:['community','nature'],title:'OCS Community Food Drive',desc:'Organize, collect and distribute food and resources for neighbours in need.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['community'],title:'Resource Mapping & Collection',desc:'Identify gaps in local services and connect community members to support networks.',level:'All levels',day:'Sundays',type:'signup',format:'group'},
+  {cats:['community','humanities'],title:'Oral History & Community Storytelling',desc:'Document and share the stories of your community through interviews and narrative.',level:'All levels',day:'Thursdays',type:'drop-in',format:'group'},
+  {cats:['community'],title:'Community Volunteer Team',desc:'Join rotating weekend volunteer crews supporting OCS programs, events and local partner organizations.',level:'All levels',day:'Weekends',type:'drop-in',format:'team'},
+  // HUMANITIES & CULTURE (formerly History & Culture)
+  {cats:['culture'],title:'Black History & Heritage Arts',desc:'Explore the rich history, art forms and cultural contributions of the African diaspora.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['culture'],title:'Indigenous Cultures & Land Knowledge',desc:'Learn from Indigenous perspectives on history, land, language and living cultural traditions.',level:'All levels',day:'Sundays',type:'drop-in',format:'group'},
+  {cats:['culture'],title:'Asian Heritage Month Celebration',desc:'A monthly gathering honouring the diverse histories and cultures of Asian communities worldwide.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['culture'],title:'Latin Heritage & Folklore',desc:'Explore the art, music, storytelling and food traditions of Latin American and Caribbean cultures.',level:'All levels',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['culture'],title:'Middle Eastern Arts & Traditions',desc:'Calligraphy, poetry, music and visual arts rooted in the rich heritage of the Middle East and North Africa.',level:'All levels',day:'Thursdays',type:'drop-in',format:'group'},
+  {cats:['culture','humanities'],title:'World Mythology & Storytelling',desc:'Myths, legends and oral traditions from cultures across the globe — storytelling as history.',level:'All levels',day:'Wednesdays',type:'drop-in',format:'group'},
+  {cats:['culture','music'],title:'Drumming Traditions of West Africa',desc:'Learn the rhythms, instruments and cultural significance behind West African drumming.',level:'All levels',day:'Saturdays',type:'drop-in',format:'team'},
+  {cats:['culture','arts'],title:'Japanese Sumi-e & Calligraphy',desc:'The meditative art of Japanese ink painting and brush calligraphy.',level:'All levels',day:'Sundays',type:'signup',format:'group'},
+  {cats:['culture'],title:'Language & Culture Explorers',desc:'Monthly spotlight on a new world language — greetings, culture, history and connection.',level:'All levels',day:'Saturdays',type:'drop-in',format:'group'},
+  // HEALTHY AGING
+  {cats:['seniors','movement'],title:'Gentle Aqua Fitness',desc:'Low-impact pool exercises to build strength, flexibility and confidence in the water.',level:'55+',day:'Mon & Wed',type:'drop-in',format:'group'},
+  {cats:['seniors','movement'],title:'Chair Yoga & Gentle Stretch',desc:'Seated and standing yoga adapted for seniors — improve flexibility, posture and calm.',level:'55+',day:'Tues & Thurs',type:'drop-in',format:'group'},
+  {cats:['seniors','defense'],title:'Tai-Chi for Balance & Wellbeing',desc:'Traditional Tai-Chi flowing sequences to improve balance, coordination and inner calm.',level:'55+',day:'Mon & Wed',type:'drop-in',format:'group'},
+  {cats:['seniors','dance'],title:'Dynamic Easy Dance — Stretch & Move',desc:'Gentle, joyful movement to familiar music — light choreography designed to stretch the body.',level:'55+',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['seniors','dance','music'],title:'Old School Jam Social',desc:'Monthly dance social celebrating classics from the 50s through 80s — music, community and great moves.',level:'55+',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['seniors','music'],title:'Sing-Along & Vocal Circle',desc:'Come together to sing beloved songs from across the decades. No experience needed.',level:'55+',day:'Thursdays',type:'drop-in',format:'group'},
+  {cats:['seniors','stem'],title:'Tech Help & Digital Confidence',desc:'Smartphones, tablets, video calls, email and social media — friendly, patient guidance.',level:'55+',day:'Wednesdays',type:'drop-in',format:'group'},
+  {cats:['seniors','gaming'],title:'Brain Games & Cognitive Play',desc:'Puzzles, trivia, chess, word games and memory challenges — keeping the mind sharp.',level:'55+',day:'Tues & Thurs',type:'drop-in',format:'group'},
+  {cats:['seniors','humanities'],title:'Life Stories Writing Circle',desc:'Write and share your personal stories and memories in a guided, supportive space.',level:'55+',day:'Tuesdays',type:'drop-in',format:'group'},
+  {cats:['seniors','community'],title:'55+ Coffee & Connect',desc:'A relaxed weekly social — good conversation, light activities and warm community.',level:'55+',day:'Fridays',type:'drop-in',format:'group'},
+  {cats:['seniors','nature'],title:'Gentle Gardening Club',desc:'Therapeutic gardening adapted for seniors — planting, tending and watching things grow.',level:'55+',day:'Saturdays',type:'drop-in',format:'group'},
+  {cats:['seniors','culinary'],title:'Cooking for One or Two',desc:'Practical, nutritious and delicious recipes scaled for smaller households.',level:'55+',day:'Sundays',type:'drop-in',format:'group'},
+];
+
+// Auto-assign instructors
+for (var gi=0;gi<classes.length;gi++){
+  var c0=classes[gi],p0=c0.cats[0],arr0=instructorMap[p0]||['TBA'],ci0=0;
+  for(var k0=0;k0<gi;k0++){if(classes[k0].cats[0]===p0)ci0++;}
+  c0.instructor=arr0[ci0%arr0.length];
+}
+
+// ─────────────────────────────────────────────────────────
+//  YOUTH GROUPS (with youthCats for cross-category matching)
+// ─────────────────────────────────────────────────────────
+var youthGroups=[
+  {label:'Little Explorers',sub:'Ages 3–5',dot:'var(--terra)',items:[
+    {title:'Tiny Tots Creative Play',desc:'Sensory art, music and movement for our youngest members. A joyful intro to creativity.',day:'Saturdays',type:'drop-in',cat:'Arts & Music',youthCats:['arts','music']},
+    {title:'Baby Movers',desc:'Gentle movement and rhythm for toddlers and preschoolers — with a caregiver.',day:'Tuesdays',type:'drop-in',cat:'Movement',youthCats:['movement']},
+    {title:'Story & Craft Time',desc:'Picture books, songs and simple crafts — building imagination from the very start.',day:'Sundays',type:'drop-in',cat:'Language Arts',youthCats:['humanities','arts','crafts']},
+  ]},
+  {label:'Young Creators',sub:'Ages 6–9',dot:'var(--mustard)',items:[
+    {title:'Junior Art Studio',desc:'Painting, collage and sculpture in a joyful open studio — all materials provided.',day:'Saturdays',type:'signup',cat:'Visual Arts',youthCats:['arts']},
+    {title:'Little Potters',desc:'Beginner hand-building with clay — roll, pinch and sculpt fun shapes and simple pottery.',day:'Saturdays',type:'signup',cat:'Studio Crafts',youthCats:['crafts']},
+    {title:'Kids Music Makers',desc:'Intro to rhythm, percussion, singing and basic instruments in a playful group setting.',day:'Wednesdays',type:'signup',cat:'Music',youthCats:['music']},
+    {title:'Little Chefs Kitchen',desc:'Simple, fun recipes for young cooks — measuring, mixing and tasting together.',day:'Sundays',type:'signup',cat:'Culinary Arts',youthCats:['culinary']},
+    {title:'Kids Karate — Beginners',desc:'Foundational karate moves, discipline and confidence for ages 6–9.',day:'Mon & Wed',type:'signup',cat:'Self-Defense',youthCats:['defense']},
+    {title:'Science Discovery Lab',desc:'Experiments with colour, water, magnets and plants — hands-on curiosity science.',day:'Saturdays',type:'drop-in',cat:'STEM',youthCats:['stem']},
+    {title:'Dance & Move — Kids',desc:'Creative movement, simple choreography and lots of fun. All styles welcome.',day:'Thursdays',type:'drop-in',cat:'Dance',youthCats:['dance']},
+    {title:'World Stories & Cultures',desc:'Tales, crafts and celebrations from cultures around the globe.',day:'Sundays',type:'drop-in',cat:'Humanities & Culture',youthCats:['culture']},
+  ]},
+  {label:'Junior Achievers',sub:'Ages 10–12',dot:'var(--blue-deep)',items:[
+    {title:'Art & Design Studio',desc:'Drawing, digital illustration and mixed media — develop a real creative practice.',day:'Saturdays',type:'signup',cat:'Visual Arts',youthCats:['arts','design']},
+    {title:'Junior Ceramics',desc:'Wheel-throwing basics and hand-building for pre-teens — fire and glaze your own creations.',day:'Saturdays',type:'signup',cat:'Studio Crafts',youthCats:['crafts']},
+    {title:'Intro to Coding — Scratch',desc:'Build games, animations and stories using Scratch. No prior experience needed.',day:'Mondays',type:'signup',cat:'STEM',youthCats:['stem']},
+    {title:'Junior Chefs — Intermediate',desc:'More complex recipes, baking and cultural cuisines for young food lovers.',day:'Sundays',type:'signup',cat:'Culinary Arts',youthCats:['culinary']},
+    {title:'Kids Karate — Intermediate',desc:'Belt progression, sparring basics and self-defence focus for ages 10–12.',day:'Mon & Wed',type:'signup',cat:'Self-Defense',youthCats:['defense']},
+    {title:'Nature Club',desc:'Outdoor observation, composting, plant care and earth science in the OCS garden.',day:'Saturdays',type:'drop-in',cat:'Nature & Sustainability',youthCats:['nature']},
+    {title:'Hip Hop Dance — Youth',desc:'Foundational hip hop grooves and freestyle — high energy and super fun.',day:'Fridays',type:'drop-in',cat:'Dance',youthCats:['dance']},
+    {title:'Junior Esports & Gaming',desc:'Supervised gaming sessions, game design basics and teamwork through play.',day:'Fridays',type:'drop-in',cat:'Gaming',youthCats:['gaming']},
+    {title:'Global Heritage Explorers',desc:'Discover art, food, music and history from different cultures through projects and discussions.',day:'Saturdays',type:'drop-in',cat:'Humanities & Culture',youthCats:['culture']},
+  ]},
+  {label:'Teen Studio',sub:'Ages 13–15',dot:'var(--plum)',items:[
+    {title:'Teen Design Lab',desc:'Graphic design, branding and digital tools — build a real portfolio piece.',day:'Saturdays',type:'signup',cat:'Design & Media',youthCats:['design']},
+    {title:'Teen Jewelry & Craft Studio',desc:'Jewelry making, leatherwork and mixed-media craft projects for creative teens.',day:'Thursdays',type:'drop-in',cat:'Studio Crafts',youthCats:['crafts']},
+    {title:'Teen Music Production',desc:'Create beats, record vocals and produce your first track using GarageBand.',day:'Tuesdays',type:'signup',cat:'Music',youthCats:['music']},
+    {title:'Teen Cooking — World Cuisines',desc:'Explore global flavours and build real kitchen confidence and technique.',day:'Sundays',type:'signup',cat:'Culinary Arts',youthCats:['culinary']},
+    {title:'Teen Karate & Self-Defense',desc:'Shotokan belt progression with a strong real-world self-defence focus.',day:'Tues & Thurs',type:'signup',cat:'Self-Defense',youthCats:['defense']},
+    {title:'Python Coding — Teens',desc:'Intro to Python programming — variables, loops, games and simple projects.',day:'Wednesdays',type:'signup',cat:'STEM',youthCats:['stem']},
+    {title:'Teen Dance — Styles Intensive',desc:'Rotate through hip hop, jazz and contemporary across the semester.',day:'Saturdays',type:'signup',cat:'Dance',youthCats:['dance']},
+    {title:'Crochet & Fibre Arts — Youth',desc:'Learn to crochet, explore textiles and make your first wearable piece.',day:'Thursdays',type:'drop-in',cat:'Fashion Design',youthCats:['fashion']},
+    {title:'Teen Esports League',desc:'Competitive team-based esports training and weekly tournaments.',day:'Tues & Thurs',type:'signup',cat:'Gaming',youthCats:['gaming']},
+    {title:'Cultural Identity & Art',desc:'Explore your own heritage and others through visual art, writing and discussion.',day:'Fridays',type:'drop-in',cat:'Humanities & Culture',youthCats:['culture','arts']},
+  ]},
+  {label:'Senior Teens',sub:'Ages 16–18',dot:'var(--forest)',items:[
+    {title:'Portfolio Prep — Art & Design',desc:'Build a strong visual portfolio for post-secondary applications and creative careers.',day:'Saturdays',type:'signup',cat:'Visual Arts',youthCats:['arts','design']},
+    {title:'Advanced Ceramics & Craft',desc:'Wheel-throwing, glazing techniques and mixed-craft experimentation for serious makers.',day:'Saturdays',type:'signup',cat:'Studio Crafts',youthCats:['crafts']},
+    {title:'App Development — Youth',desc:'Design and build your first mobile app. iOS or Android — your choice.',day:'Tuesdays',type:'signup',cat:'STEM',youthCats:['stem']},
+    {title:'Financial Literacy for Teens',desc:'Budgeting, saving, credit basics and first steps to financial independence.',day:'Saturdays',type:'signup',cat:'Life Skills',youthCats:['finance']},
+    {title:'Culinary Arts — Advanced Youth',desc:'Restaurant-level techniques, menu planning and food entrepreneurship basics.',day:'Sundays',type:'signup',cat:'Culinary Arts',youthCats:['culinary']},
+    {title:'Teen Spoken Word & Writing',desc:'Develop your voice through poetry, creative writing and open-mic performance.',day:'Fridays',type:'drop-in',cat:'Language Arts',youthCats:['humanities']},
+    {title:'Leadership & Community Action',desc:'Plan real events, advocate for causes and develop leadership skills that last.',day:'Wednesdays',type:'signup',cat:'Community Engagement',youthCats:['community']},
+    {title:'Advanced Dance — Performance Track',desc:'Technique, choreography and stage performance prep for serious dancers.',day:'Tues & Thurs',type:'signup',cat:'Dance',youthCats:['dance']},
+    {title:'World History & Social Justice',desc:'Critical exploration of global history, colonialism, movements and the world we live in now.',day:'Thursdays',type:'signup',cat:'Humanities & Culture',youthCats:['culture']},
+  ]},
+];
+
+// ─────────────────────────────────────────────────────────
+//  EVENTS — FIX 1: pills are All/Upcoming/Past/Special Event/Free only
+//           FIX 6: more Free events added
+// ─────────────────────────────────────────────────────────
+// FIX 1: only these 5 pills shown
+var eventTagsList=['All','Upcoming','Past','Special Event','Free'];
+var activeEventTag='All';
+
+var events=[
+  {month:'JUL',day:'12',title:'OCS Open Craft Day',desc:'Drop in and try pottery, jewelry making or candle-pouring — all materials provided, no signup needed.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(176,140,42,0.15)',tt:'var(--amber)'},
+  {month:'JUN',day:'28',title:'End of Chapter I Celebration',desc:'As the season closes, we reflect, share and look ahead to Chapter II.',tag:'Special Event',period:'upcoming',recap:'',tc:'rgba(212,114,90,0.15)',tt:'#9B4A35'},
+  {month:'JUN',day:'21',title:'Spoken Word & Open Mic Night',desc:'Poetry, stories and performance from our Language Arts community.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(176,80,112,0.15)',tt:'#8A3050'},
+  {month:'JUN',day:'14',title:'Lunar New Year Heritage Showcase',desc:'A celebration of Asian heritage through food, art, performance and community.',tag:'Special Event',period:'upcoming',recap:'',tc:'rgba(212,168,42,0.15)',tt:'#7A5A10'},
+  {month:'JUN',day:'07',title:'OCS Esports Tournament',desc:'In-house gaming tournament across multiple titles — open to all members.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(74,144,196,0.15)',tt:'#1F5F8A'},
+  {month:'MAY',day:'31',title:'Karate Grading Ceremony',desc:'Belt gradings for all OCS karate students — families welcome.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(138,92,138,0.15)',tt:'#5A3A5A'},
+  {month:'MAY',day:'24',title:'Community Skill Share',desc:'Members teach members — 20-minute workshops in whatever you know best. Free and open to all.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(42,138,138,0.15)',tt:'var(--teal)'},
+  {month:'MAY',day:'17',title:'Youth Arts & Culture Showcase',desc:'A celebration of work from our kids and teen programs across all disciplines.',tag:'Free',period:'upcoming',recap:'',tc:'rgba(143,175,138,0.2)',tt:'#4A6E4E'},
+  {month:'MAY',day:'10',title:'Afro-Caribbean Cultural Festival',desc:'A vibrant day of music, dance, food and storytelling celebrating the African diaspora.',tag:'Special Event',period:'upcoming',recap:'',tc:'rgba(196,98,42,0.15)',tt:'#9B4A35'},
+  {month:'APR',day:'26',title:'Spring Cooking Collective',desc:'A community potluck and cooking workshop — brought a dish, learned a recipe.',tag:'Free',period:'past',recap:'A sold-out evening with 80+ attendees. Highlights included a live dumpling demo and a West African pepper soup station. We raised $320 for the OCS Community Food Drive.',tc:'rgba(196,98,42,0.15)',tt:'#9B4A35'},
+  {month:'APR',day:'19',title:'Indigenous Art & Storytelling Evening',desc:'An evening of Indigenous art, oral tradition and community dialogue.',tag:'Special Event',period:'past',recap:'Over 60 community members joined for a moving and educational evening. Featured Elder Rose shared stories through beadwork and song. Recordings are available by request.',tc:'rgba(212,168,42,0.15)',tt:'#7A5A10'},
+  {month:'APR',day:'14',title:'Free Studio Drop-In Weekend',desc:'Our studios were open to all — try a class, meet an instructor, make something.',tag:'Free',period:'past',recap:'Over 90 visitors tried pottery, graphic design, and dance across two days. A perfect introduction to what OCS is all about.',tc:'rgba(176,140,42,0.15)',tt:'var(--amber)'},
+  {month:'APR',day:'12',title:'Open House & Studio Tour',desc:'Explored all 19 program areas, met instructors and tried a mini-class.',tag:'Free',period:'past',recap:'We welcomed 150+ visitors across our opening weekend. The most popular stations were Gaming, Dance and Junior Chefs. Full photo gallery available in the Community hub.',tc:'rgba(74,144,196,0.15)',tt:'#1F5F8A'},
+  {month:'APR',day:'05',title:'Opening Ceremony — The Open Ground',desc:'An evening celebrating Chapter I with demos, performances and community.',tag:'Special Event',period:'past',recap:'What a night! 200 guests came through our doors for opening night. DJ, live drumming, and a community mural unveiling. Thank you for making this chapter feel so alive.',tc:'rgba(143,175,138,0.2)',tt:'#4A6E4E'},
+  {month:'MAR',day:'29',title:'Neighbourhood Cleanup & Craft Day',desc:'Morning cleanup walk followed by a free craft session — upcycle found materials into art.',tag:'Free',period:'past',recap:'40 volunteers cleaned three local blocks, then transformed found objects into sculpture. A genuinely feel-good afternoon.',tc:'rgba(58,107,74,0.15)',tt:'#3A6B4A'},
+  {month:'MAR',day:'22',title:'Holi & South Asian Heritage Day',desc:'A vibrant celebration of South Asian culture, colour, music and food.',tag:'Special Event',period:'past',recap:'Our first cultural celebration was a stunning success — colour stations, classical and Bollywood dance, and a community meal featuring dishes from across South Asia. 120+ attendees.',tc:'rgba(138,92,138,0.15)',tt:'#5A3A5A'},
+  {month:'MAR',day:'08',title:'International Womens Day Gathering',desc:'A celebration of women in the arts, movement, STEM and community.',tag:'Free',period:'past',recap:'A powerful evening of performance, panel discussion and connection. Speakers included three OCS instructors sharing their stories. Standing room only — we will expand next year.',tc:'rgba(176,80,112,0.15)',tt:'#8A3050'},
+];
+
+// ─────────────────────────────────────────────────────────
+//  SHOP
+// ─────────────────────────────────────────────────────────
+var shopTypes=[{id:'all',label:'All Products'},{id:'merch',label:'Merchandise'},{id:'passes',label:'Passes & Memberships'},{id:'supplies',label:'Supplies'},{id:'digital',label:'Digital'}];
+var activeShopFilter='all';
+var shop=[
+  {name:'OCS Signature Tee',type:'merch',typeLabel:'Merchandise',price:'$38',bg:'var(--terra-pale)'},
+  {name:'The Open Ground Cap',type:'merch',typeLabel:'Merchandise',price:'$32',bg:'var(--terra-pale)'},
+  {name:'Studio Tote Bag',type:'merch',typeLabel:'Merchandise',price:'$28',bg:'var(--sage-pale)'},
+  {name:'OCS Crewneck Sweatshirt',type:'merch',typeLabel:'Merchandise',price:'$58',bg:'var(--blue-pale)'},
+  {name:'10-Class Pass',type:'passes',typeLabel:'Class Pass',price:'$120',bg:'var(--mustard-pale)'},
+  {name:'Monthly Membership',type:'passes',typeLabel:'Membership',price:'$85/mo',bg:'var(--mustard-pale)'},
+  {name:'Annual Membership',type:'passes',typeLabel:'Membership',price:'$799/yr',bg:'var(--mustard-pale)'},
+  {name:'Drop-in Single Class',type:'passes',typeLabel:'Class Pass',price:'$18',bg:'var(--sand)'},
+  {name:'OCS Sketchbook',type:'supplies',typeLabel:'Supplies',price:'$22',bg:'var(--sage-pale)'},
+  {name:'Garden Starter Kit',type:'supplies',typeLabel:'Supplies',price:'$35',bg:'var(--forest-pale)'},
+  {name:'Art Supply Bundle',type:'supplies',typeLabel:'Supplies',price:'$48',bg:'var(--terra-pale)'},
+  {name:'Clay & Craft Kit',type:'supplies',typeLabel:'Supplies',price:'$42',bg:'var(--amber-pale)'},
+  {name:'Online Workshop Bundle',type:'digital',typeLabel:'Digital',price:'$45',bg:'var(--blue-mist)'},
+  {name:'Recipe Zine Vol.1',type:'digital',typeLabel:'Digital + Print',price:'$18',bg:'var(--blue-mist)'},
+  {name:'OCS Playlist Collection',type:'digital',typeLabel:'Digital',price:'$12',bg:'var(--blue-mist)'},
+  {name:'STEM Activity Pack',type:'digital',typeLabel:'Digital',price:'$24',bg:'var(--forest-pale)'},
+];
+
+var announcements=[
+  {title:'Chapter II Theme Announced — "The Rising"',body:'We are thrilled to share that our next seasonal chapter will be called The Rising, launching in September. Expect new programs, new instructors and a fresh visual identity.',tag:'Chapter News',tagBg:'rgba(212,168,42,0.15)',tagColor:'#7A5A10',accent:'var(--mustard)',date:'Jun 10, 2025'},
+  {title:'New Instructor — Welcome Isabelle Tran',body:'We are delighted to welcome Isabelle Tran to the OCS team as our lead Fashion Design instructor. Isabelle brings 10+ years of industry experience and a passion for sustainable design.',tag:'Team',tagBg:'rgba(74,144,196,0.15)',tagColor:'#1F5F8A',accent:'var(--blue-deep)',date:'Jun 5, 2025'},
+  {title:'Studio Crafts Studio Now Open',body:'Our brand-new Studio Crafts space is ready — featuring pottery wheels, a jewelry bench, carpentry tools and a candle-making station. Drop-in sessions begin this Saturday.',tag:'Programs',tagBg:'rgba(176,140,42,0.15)',tagColor:'var(--amber)',accent:'var(--amber)',date:'Jun 1, 2025'},
+  {title:'Summer Schedule Now Live',body:'Our full summer program schedule is now available in the Classes section. Several new drop-in options have been added across Dance, STEM, Culinary and Healthy Aging.',tag:'Programs',tagBg:'rgba(143,175,138,0.2)',tagColor:'#4A6E4E',accent:'var(--sage-dark)',date:'May 28, 2025'},
+  {title:'OCS Community Garden Now Open',body:'The OCS outdoor community garden is officially open for the season. Members enrolled in Nature & Sustainability programs will have dedicated plot access. Drop-in sessions welcome all.',tag:'Nature',tagBg:'rgba(58,107,74,0.15)',tagColor:'#3A6B4A',accent:'var(--forest)',date:'May 15, 2025'},
+  {title:'Youth Program Waitlist — Join Now',body:'Several youth programs are filling quickly. If your child missed enrolment, please join the waitlist through the Classes page and we will notify you of openings.',tag:'Youth',tagBg:'rgba(138,92,138,0.15)',tagColor:'#5A3A5A',accent:'var(--plum)',date:'May 8, 2025'},
+  {title:'Spring Cooking Collective — Recap',body:'Thank you to all 80+ guests who joined us for our community potluck. We raised $320 for the OCS Food Drive. Recipes from the evening are available on request.',tag:'Event Recap',tagBg:'rgba(196,98,42,0.15)',tagColor:'#9B4A35',accent:'var(--terra)',date:'Apr 28, 2025'},
+  {title:'Opening Ceremony — Thank You',body:'What a night. 200 guests, live drumming, a community mural and the most vibrant energy we could have hoped for. Thank you for making The Open Ground feel so real.',tag:'Event Recap',tagBg:'rgba(143,175,138,0.2)',tagColor:'#4A6E4E',accent:'var(--sage-dark)',date:'Apr 7, 2025'},
+];
+
+var activeSort='all';
+var activeCatFilter='all';
+
+// ─────────────────────────────────────────────────────────
+//  TOOLTIP
+// ─────────────────────────────────────────────────────────
+var gTip=null;
+function showTip(e,text,anchor){
+  if(!gTip)gTip=document.getElementById('gTooltip');
+  gTip.textContent=text;gTip.style.display='block';
+  var r=anchor.getBoundingClientRect(),tw=gTip.offsetWidth,th=gTip.offsetHeight;
+  var left=r.left+r.width/2-tw/2,top=r.top-th-10,margin=10;
+  if(left<margin)left=margin;
+  if(left+tw>window.innerWidth-margin)left=window.innerWidth-margin-tw;
+  if(top<margin)top=r.bottom+10;
+  gTip.style.left=left+'px';gTip.style.top=top+'px';
+}
+function hideTip(){if(!gTip)gTip=document.getElementById('gTooltip');gTip.style.display='none';}
+
+function catById(id){for(var i=0;i<cats.length;i++){if(cats[i].id===id)return cats[i];}return cats[0];}
+
+// ─────────────────────────────────────────────────────────
+//  FIX 4: HOME CAT STRIP — clicking leads to that filtered category
+// ─────────────────────────────────────────────────────────
+function renderHomeCats(){
+  var el=document.getElementById('homeCatStrip');if(!el)return;
+  var html='';
+  for(var i=0;i<cats.length;i++){
+    var c=cats[i];
+    // onclick: navigate to classes page AND set that category filter active
+    var clickFn="goToCategory('"+c.id+"')";
+    html+='<div onclick="'+clickFn+'"'
+      +' onmouseenter="showTip(event,\''+c.tip.replace(/'/g,"\\'")+'\',this)" onmouseleave="hideTip()"'
+      +' style="background:white;border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;"'
+      +' onmouseover="this.style.transform=\'translateY(-3px)\';this.style.boxShadow=\'0 10px 28px rgba(42,31,20,0.1)\'"'
+      +' onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">'
+      +'<div style="height:80px;background:'+c.bg+';display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:14px 14px 0 0;">'
+      +'<div style="position:absolute;width:60px;height:60px;border-radius:50%;background:'+c.iconBg+';opacity:0.12;top:-12px;right:-12px;"></div>'
+      +'<div style="width:40px;height:40px;border-radius:10px;background:'+c.iconBg+';display:flex;align-items:center;justify-content:center;">'+(icons[c.id]||icons['arts'])+'</div>'
+      +'</div>'
+      +'<div style="padding:8px 10px 10px;">'
+      +'<div style="font-family:var(--ff-head);font-size:11px;font-weight:700;color:var(--ink);line-height:1.25;">'+c.label+'</div>'
+      +'</div></div>';
+  }
+  el.innerHTML=html;
+}
+
+// FIX 4: navigate to classes page with a specific category pre-selected
+function
